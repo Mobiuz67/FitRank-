@@ -20,7 +20,11 @@ jobs:
         working-directory: proj
         run: |
           sed -i 's/kotlinOptions { jvmTarget = "17" }/compileOptions {\n        sourceCompatibility = JavaVersion.VERSION_17\n        targetCompatibility = JavaVersion.VERSION_17\n    }\n    kotlinOptions { jvmTarget = "17" }/' app/build.gradle.kts
-          cat app/build.gradle.kts
+
+      - name: Perbaiki kode MainActivity
+        working-directory: proj
+        run: |
+          sed -i 's/^        addView(progressBar(xp % 100, 100), marginParams())/        content.addView(progressBar(xp % 100, 100), marginParams())/' app/src/main/java/com/fitrank/app/MainActivity.kt
 
       - uses: actions/setup-java@v4
         with:
