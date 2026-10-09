@@ -26,6 +26,34 @@ jobs:
         run: |
           sed -i 's/^        addView(progressBar(xp % 100, 100), marginParams())/        content.addView(progressBar(xp % 100, 100), marginParams())/' app/src/main/java/com/fitrank/app/MainActivity.kt
 
+      - name: Tambah ikon aplikasi
+        working-directory: proj
+        run: |
+          mkdir -p app/src/main/res/drawable app/src/main/res/mipmap-anydpi-v26
+          cat > app/src/main/res/drawable/ic_launcher_background.xml <<'XML'
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="108dp" android:height="108dp"
+              android:viewportWidth="108" android:viewportHeight="108">
+              <path android:fillColor="#0B1220" android:pathData="M0,0H108V108H0Z"/>
+              <path android:fillColor="#12305F" android:pathData="M54,54m-34,0a34,34 0 1,1 68,0a34,34 0 1,1 -68,0"/>
+          </vector>
+          XML
+          cat > app/src/main/res/drawable/ic_launcher_foreground.xml <<'XML'
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="108dp" android:height="108dp"
+              android:viewportWidth="108" android:viewportHeight="108">
+              <path android:fillColor="#2F80FF" android:pathData="M36,30H76V42H48V49H68V60H48V78H36Z"/>
+          </vector>
+          XML
+          cat > app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml <<'XML'
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@drawable/ic_launcher_background"/>
+              <foreground android:drawable="@drawable/ic_launcher_foreground"/>
+          </adaptive-icon>
+          XML
+          sed -i 's|android:label="FitRank"|android:label="FitRank" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher"|' app/src/main/AndroidManifest.xml
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
