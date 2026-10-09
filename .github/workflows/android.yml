@@ -1,4 +1,4 @@
-name: Build FitRank APK
+ name: Build FitRank APK
 
 on:
   workflow_dispatch:
@@ -15,7 +15,12 @@ jobs:
         run: |
           mkdir proj
           unzip -q FitRank*.zip -d proj
-          ls proj
+
+      - name: Perbaiki pengaturan Java
+        working-directory: proj
+        run: |
+          sed -i 's/kotlinOptions { jvmTarget = "17" }/compileOptions {\n        sourceCompatibility = JavaVersion.VERSION_17\n        targetCompatibility = JavaVersion.VERSION_17\n    }\n    kotlinOptions { jvmTarget = "17" }/' app/build.gradle.kts
+          cat app/build.gradle.kts
 
       - uses: actions/setup-java@v4
         with:
